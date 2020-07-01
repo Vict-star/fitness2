@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="" name="description">
+    <meta content="Mark Otto, Jacob Thornton, and Bootstrap contributors" name="author">
+    <meta content="Jekyll v4.0.1" name="generator">
+    <title>力美健后台管理</title>
+
+    <link href="https://getbootstrap.com/docs/4.5/examples/dashboard/" rel="canonical">
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-4.5.0-dist/css/bootstrap.css" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="dashboard.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="staff/fragments::topNav"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="staff/fragments::sidebarMenu(activeUri='home')"></div>
+
+        <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4" role="main">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">下午好，[[${session.loginUser.name}]]!</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+
+                    <img alt="Responsive image"
+                         class="img-fluid" src="https://upfile2.asqql.com/upfile/hdimg/wmtp/wmtp/2018-07/08/18_7_8_14_26_06tksiguf1.jpg">
+                </div>
+                <div class="col-md-4">
+                    <div class="jumbotron">
+                        <h2 class="display-5">通知</h2>
+                        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra
+                            attention to featured content or information.</p>
+                        <hr class="my-4">
+                        <p>2020-6-19 From：管理员zcf</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+<script crossorigin="anonymous"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+<script src="bootstrap-4.5.0-dist/js/bootstrap.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

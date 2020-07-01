@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: zcf
+
+  thymeleaf:
+    mode: HTML
+    cache: false
+    prefix: classpath:/templates/
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
