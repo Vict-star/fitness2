@@ -22,33 +22,34 @@ public class LoginController {
 
     @GetMapping
     public String login(HttpServletRequest request) {
-        return "Login";
-//        Staff staff = new Staff();
-//        staff.setName("zcf");
-//        staff.setId(123456);
-//        request.getSession().setAttribute("loginUser",staff);
-//        return "staff/index";
+        Staff staff = (Staff) request.getSession().getAttribute("loginUser");
+        if (staff == null) {
+            return "Login";
+        } else {
+            return "staff/index";
+        }
     }
 
     /*TODO:登陆功能*/
     @PostMapping("/Login")
     public String login(@RequestParam String id, @RequestParam String password,
                         RedirectAttributes attributes, HttpServletRequest request) {
-
-
-//        if ( ) {
-//
-//            return "/staff/index";
-//        } else {
-//
+        Staff staff = staffService.getStaffByID(id);
+        System.out.println(staff);
+        if (staff != null && staff.getPassword().equals(password) && staff.getState().equals("在职")) {
+            staff.setPassword(null);
+            request.getSession().setAttribute("loginUser", staff);
+            return "/staff/index";
+        } else {
+            attributes.addFlashAttribute("message", "用户名或密码错误");
         return "redirect:/index";
-//        }
+        }
     }
 
     /*登出功能*/
     @GetMapping("/Logout")
     public String logout(HttpServletRequest request) {
-
+        request.getSession().removeAttribute("loginUser");
         return "redirect:/index";
     }
 }

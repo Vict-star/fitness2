@@ -1,19 +1,14 @@
 package com.software.fitness.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.software.fitness.domain.*;
 import com.software.fitness.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 @Controller
 @RequestMapping("/staff")
@@ -39,8 +34,23 @@ public class StaffController {
     /*TODO:会员注销*/
     @PostMapping("/memberManage/{id}/cancel")
     public String cancelMember(@PathVariable("id") int id, HttpServletRequest request, RedirectAttributes attributes) {
-
+        Member member = new Member();
+        member.setId(id);
+        member.setState("已注销");
+        Integer er = staffService.updateMember(member);
+        String message = "";
+        if (er != null && er > 0) {
+            message = "" + id + " 已注销";
+            int sid = ((Staff) request.getSession().getAttribute("loginUser")).getId();
+//            recordService.staffInsertRecord(genRecord(sid, "注销会员：" + member.toString()));
+        } else {
+            message = "更改失败，请稍后重试";
+        }
+        attributes.addFlashAttribute("message", message);
         return "redirect:/staff/memberManage/";
+    }
+
+    private void genRecord(int sid, String s) {
     }
 
     /*TODO:会员激活*/
