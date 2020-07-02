@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("/staff")
@@ -20,7 +21,8 @@ public class StaffController {
     /*TODO:会员列表页*/
     @GetMapping("/memberManage")
     public String memberManagePage(HttpServletRequest request, Model model) {
-
+        List<Member> memberList = staffService.listMember();
+        model.addAttribute("memberList", memberList);
         return "staff/memberManage";
     }
 

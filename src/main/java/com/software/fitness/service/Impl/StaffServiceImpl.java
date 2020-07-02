@@ -18,4 +18,18 @@ public class StaffServiceImpl implements StaffService {
     @Autowired
     private MemberDao memberDao;
 
+    @Override
+    public Integer updateMember(Member member) {
+        return null;
+    }
+
+    @Override
+    public Staff getStaffByID(String id) {
+        return staffDao.getStaffByID(id);
+    }
+
+    @Override
+    public List<Member> listMember() {
+        return memberDao.listMember();
+    }
 }
