@@ -1,6 +1,7 @@
 package com.software.fitness.controller;
 
 import com.software.fitness.domain.*;
+import com.software.fitness.service.RecordService;
 import com.software.fitness.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,7 +45,8 @@ public class StaffController {
         if (er != null && er > 0) {
             message = "" + id + " 已注销";
             int sid = ((Staff) request.getSession().getAttribute("loginUser")).getId();
-//            recordService.staffInsertRecord(genRecord(sid, "注销会员：" + member.toString()));
+//            RecordService.staffInsertRecord(genRecord(sid, "注销会员：" + member.toString()));
+//           不明白上面这个genRecord是什么意思
         } else {
             message = "更改失败，请稍后重试";
         }
@@ -52,8 +54,7 @@ public class StaffController {
         return "redirect:/staff/memberManage/";
     }
 
-    private void genRecord(int sid, String s) {
-    }
+
 
     /*TODO:会员激活*/
     @PostMapping("/memberManage/{id}/activate")
