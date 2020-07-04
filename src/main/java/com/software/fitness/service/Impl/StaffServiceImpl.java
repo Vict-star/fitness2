@@ -19,9 +19,9 @@ public class StaffServiceImpl implements StaffService {
     private MemberDao memberDao;
 
     @Override
-    public Integer updateMember(Member member) {
-        memberDao.update(member);
-        return null;
+    public boolean updateMember(Member member) {
+       Integer row = memberDao.update(member);
+        return row>0;
     }
 
     @Override

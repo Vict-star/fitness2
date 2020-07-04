@@ -40,9 +40,9 @@ public class StaffController {
         Member member = new Member();
         member.setId(id);
         member.setState("已注销");
-        Integer er = staffService.updateMember(member);
+        boolean result=staffService.updateMember(member);
         String message = "";
-        if (er != null && er > 0) {
+        if (result) {
             message = "" + id + " 已注销";
             int sid = ((Staff) request.getSession().getAttribute("loginUser")).getId();
         } else {
@@ -57,7 +57,18 @@ public class StaffController {
     /*TODO:会员激活*/
     @PostMapping("/memberManage/{id}/activate")
     public String activateMember(@PathVariable("id") int id, HttpServletRequest request, RedirectAttributes attributes) {
-
+     Member member=new Member();
+     member.setId(id);
+     member.setState("有效");
+     boolean result=staffService.updateMember(member);
+     String message="";
+     if(result){
+         message=""+id+"已激活";
+         int sid = ((Staff) request.getSession().getAttribute("loginUser")).getId();
+     }else{
+         message="更改失败，请稍后重试";
+     }
+        attributes.addFlashAttribute("message", message);
         return "redirect:/staff/memberManage/";
     }
 
