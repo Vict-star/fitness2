@@ -18,6 +18,7 @@ public class StaffController {
 
     @Autowired
     private StaffService staffService;
+    private RecordService recordService;
 
     /*TODO:会员列表页*/
     @GetMapping("/memberManage")
@@ -44,7 +45,8 @@ public class StaffController {
         String message = "";
         if (er != null && er > 0) {
             message = "" + id + " 已注销";
-            int sid = ((Staff) request.getSession().getAttribute("loginUser")).getId();
+            int s_id = ((Staff) request.getSession().getAttribute("loginUser")).getId();
+            recordService.deleteRecord(genRecord(s_id, "注销会员：" + member.toString()));
         } else {
             message = "更改失败，请稍后重试";
         }
@@ -75,6 +77,8 @@ public class StaffController {
         String message = "";
         if (result) {
             message = "添加成功";
+            int s_id =((Staff)request.getSession().getAttribute("loginUser")).getId();
+            recordService.insertRecord(genRecord(s_id, "添加会员：" + member.toString()));
         } else {
             message = "添加失败";
         }
@@ -83,9 +87,27 @@ public class StaffController {
     }
 
     /*TODO:会员编辑*/
+
+    private Record genRecord(int id, String op) {
+        Record record = new Record();
+        record.setStaff_id(id);
+        record.setOperation(op);
+        return record;
+    }
+
     @PostMapping("/memberManage/edit")
     public String editMember(Member member, HttpServletRequest request, RedirectAttributes attributes) {
-
+        String message = "";
+        Integer change = staffService.updateMember(member);
+        if (change > 0){
+            message = "修改成功";
+            int s_id =((Staff)request.getSession().getAttribute("loginUser")).getId();
+            recordService.insertRecord(genRecord(s_id, "修改会员：" + member.toString()));
+        }
+        else{
+            message = "修改失败";
+        }
+        attributes.addFlashAttribute("message",message);
         return "redirect:/staff/memberManage";
     }
 }

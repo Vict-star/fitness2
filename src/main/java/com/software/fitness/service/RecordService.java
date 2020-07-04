@@ -6,9 +6,6 @@ import java.util.List;
 
 public interface RecordService {
 
-    static void staffInsertRecord(Object genRecord) {
-    }
-
     Integer insertRecord(Record record);
 
     Integer deleteRecord(Record record);
