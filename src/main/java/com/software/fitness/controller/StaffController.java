@@ -109,8 +109,8 @@ public class StaffController {
     @PostMapping("/memberManage/edit")
     public String editMember(Member member, HttpServletRequest request, RedirectAttributes attributes) {
         String message = "";
-        Integer change = staffService.updateMember(member);
-        if (change > 0){
+        boolean change = staffService.updateMember(member);
+        if (change == true){
             message = "修改成功";
             int s_id =((Staff)request.getSession().getAttribute("loginUser")).getId();
             recordService.insertRecord(genRecord(s_id, "修改会员：" + member.toString()));
