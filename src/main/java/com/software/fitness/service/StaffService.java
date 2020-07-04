@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 public interface StaffService {
-    Integer updateMember(Member member);
+    boolean updateMember(Member member);
 
     Staff getStaffByID(String id);
 
