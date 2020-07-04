@@ -16,4 +16,8 @@ public interface StaffService {
     Staff getStaffByID(String id);
 
     List<Member> listMember();
+
+    boolean addMember(Member member);
+
+    Member getMemberByID(int id);
 }

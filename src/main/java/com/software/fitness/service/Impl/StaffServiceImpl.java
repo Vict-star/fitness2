@@ -20,6 +20,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public Integer updateMember(Member member) {
+        memberDao.update(member);
         return null;
     }
 
@@ -31,5 +32,16 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public List<Member> listMember() {
         return memberDao.listMember();
+    }
+
+    @Override
+    public boolean addMember(Member member) {
+        Integer row = memberDao.insert(member);
+        return row > 0;
+    }
+
+    @Override
+    public Member getMemberByID(int id) {
+        return memberDao.getMemberById(id);
     }
 }

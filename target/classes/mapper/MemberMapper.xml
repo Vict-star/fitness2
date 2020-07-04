@@ -5,4 +5,16 @@
     <select id="listMember" resultType="com.software.fitness.domain.Member">
         select * from member;
     </select>
+
+    <update id="update" parameterType="com.software.fitness.domain.Member">
+        update member set state = #{state} WHERE id = #{id};
+    </update>
+
+    <insert id="insert" parameterType="com.software.fitness.domain.Member">
+        insert into member(`name`) values (#{name});
+    </insert>
+
+    <select id="getMemberById" parameterType="java.lang.Integer" resultType="com.software.fitness.domain.Member">
+        select * from member where id = #{id}
+    </select>
 </mapper>

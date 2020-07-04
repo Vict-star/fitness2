@@ -30,7 +30,7 @@ public class StaffController {
     /*TODO:会员详情页*/
     @GetMapping("/memberManage/{id}")
     public String memberEditPage(@PathVariable("id") int id, HttpServletRequest request, Model model) {
-
+        model.addAttribute("member", staffService.getMemberByID(id));
         return "staff/memberEdit";
     }
 
@@ -45,8 +45,6 @@ public class StaffController {
         if (er != null && er > 0) {
             message = "" + id + " 已注销";
             int sid = ((Staff) request.getSession().getAttribute("loginUser")).getId();
-//            RecordService.staffInsertRecord(genRecord(sid, "注销会员：" + member.toString()));
-//           不明白上面这个genRecord是什么意思
         } else {
             message = "更改失败，请稍后重试";
         }
@@ -73,7 +71,14 @@ public class StaffController {
     /*TODO:会员添加*/
     @PostMapping("/memberManage/add")
     public String addMember(Member member, HttpServletRequest request, RedirectAttributes attributes) {
-
+        boolean result = staffService.addMember(member);
+        String message = "";
+        if (result) {
+            message = "添加成功";
+        } else {
+            message = "添加失败";
+        }
+        attributes.addAttribute("message", message);
         return "redirect:/staff/memberManage";
     }
 

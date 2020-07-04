@@ -11,4 +11,10 @@ import java.util.List;
 public interface MemberDao {
 
     List<Member> listMember();
+
+    Integer update(Member member);
+
+    Integer insert(Member member);
+
+    Member getMemberById(int id);
 }
