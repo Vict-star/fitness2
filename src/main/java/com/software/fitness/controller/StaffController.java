@@ -1,7 +1,6 @@
 package com.software.fitness.controller;
 
 import com.software.fitness.domain.*;
-import com.software.fitness.service.RecordService;
 import com.software.fitness.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +17,6 @@ public class StaffController {
 
     @Autowired
     private StaffService staffService;
-    private RecordService recordService;
 
     /*TODO:会员列表页*/
     @GetMapping("/memberManage")
@@ -45,8 +43,6 @@ public class StaffController {
         String message = "";
         if (result) {
             message = "" + id + " 已注销";
-            int s_id = ((Staff) request.getSession().getAttribute("loginUser")).getId();
-            recordService.insertRecord(genRecord(s_id, "注销会员：" + member.toString()));
         } else {
             message = "更改失败，请稍后重试";
         }
@@ -80,8 +76,6 @@ public class StaffController {
         String message = "";
         if (result) {
             message = "添加成功";
-            int s_id = ((Staff) request.getSession().getAttribute("loginUser")).getId();
-            recordService.insertRecord(genRecord(s_id, "添加会员：" + member.toString()));
         } else {
             message = "添加失败";
         }
@@ -90,13 +84,6 @@ public class StaffController {
     }
 
     /*TODO:会员编辑*/
-
-    private Record genRecord(int id, String op) {
-        Record record = new Record();
-        record.setStaff_id(id);
-        record.setOperation(op);
-        return record;
-    }
 
     @PostMapping("/memberManage/edit")
     public String editMember(Member member, HttpServletRequest request, RedirectAttributes attributes, Model model) {
@@ -114,11 +101,47 @@ public class StaffController {
 //            int s_id =((Staff)request.getSession().getAttribute("")).getId();
 //            recordService.insertRecord(genRecord(s_id, "修改会员：" + member.toString()));
             model.addAttribute("member", staffService.getMemberByID(id));
-        }
-        else{
+        } else {
             message = "修改失败";
         }
-        attributes.addFlashAttribute("message",message);
+        attributes.addFlashAttribute("message", message);
         return "redirect:/staff/memberManage/" + id;
+    }
+
+    /*TODO:教练列表页*/
+    @GetMapping("/coachManage")
+    public String coachManagePage(HttpServletRequest request,
+                                  Model model) {
+        return "staff/coachManage";
+    }
+
+    /*TODO:添加教练*/
+    @PostMapping("/coachManage/add")
+    public String addCoach(Coach coach, HttpServletRequest request, RedirectAttributes attributes) {
+        return "redirect:/staff/coachManage";
+    }
+
+    /*TODO:教练详情页*/
+    @GetMapping("/coachManage/{id}")
+    public String coachEditPage(@PathVariable("id") int id, HttpServletRequest request, Model model) {
+        return "staff/coachEdit";
+    }
+
+    /*TODO:教练编辑上传*/
+    @PostMapping("/coachManage/{id}/update")
+    public String updateCoach(@PathVariable("id") int id, Coach coach, HttpServletRequest request, RedirectAttributes attributes) {
+        return "redirect:/staff/coachManage/" + id;
+    }
+
+    /*TODO:离职教练*/
+    @PostMapping("/coachManage/{id}/dismiss")
+    public String dismissCoach(@PathVariable("id") int id, HttpServletRequest request, RedirectAttributes attributes) {
+        return "redirect:/staff/coachManage";
+    }
+
+    /*TODO:启用教练*/
+    @PostMapping("/coachManage/{id}/employ")
+    public String employCoach(@PathVariable("id") int id, HttpServletRequest request, RedirectAttributes attributes) {
+        return "redirect:/staff/coachManage";
     }
 }
