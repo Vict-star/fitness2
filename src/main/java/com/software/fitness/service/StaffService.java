@@ -13,6 +13,8 @@ import java.util.List;
 public interface StaffService {
     boolean updateMember(Member member);
 
+    boolean updateMemberall(Member member);
+
     Staff getStaffByID(String id);
 
     List<Member> listMember();

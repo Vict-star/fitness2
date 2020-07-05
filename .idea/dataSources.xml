@@ -7,5 +7,17 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/fitnesstest?useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useAffectedRows=true</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="123@localhost" uuid="ddf81f55-2d4c-4b8f-9be5-151a3f770cdd">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/fitnesstest?useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useAffectedRows=true&amp;allowPublicKeyRetrieval=true</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="final@localhost" uuid="0215c8ea-cff4-4559-9951-1b4bc4a3306d">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/fitnesstest?useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useAffectedRows=true&amp;allowPublicKeyRetrieval=true</jdbc-url>
+    </data-source>
   </component>
 </project>

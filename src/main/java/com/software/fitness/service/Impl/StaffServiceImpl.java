@@ -24,6 +24,12 @@ public class StaffServiceImpl implements StaffService {
         return row>0;
     }
 
+    public boolean updateMemberall(Member member){
+        Integer row = memberDao.updateall(member);
+        return row>0;
+    }
+
+
     @Override
     public Staff getStaffByID(String id) {
         return staffDao.getStaffByID(id);

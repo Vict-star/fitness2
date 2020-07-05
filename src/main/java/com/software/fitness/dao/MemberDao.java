@@ -14,6 +14,8 @@ public interface MemberDao {
 
     Integer update(Member member);
 
+    Integer updateall(Member member);
+
     Integer insert(Member member);
 
     Member getMemberById(int id);
