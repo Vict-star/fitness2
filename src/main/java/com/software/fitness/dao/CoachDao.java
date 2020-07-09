@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 @Mapper
 public interface CoachDao {
+    Integer update(Coach coach);
 
 }

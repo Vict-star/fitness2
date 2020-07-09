@@ -1,5 +1,6 @@
 package com.software.fitness.service;
 
+import com.software.fitness.domain.Coach;
 import com.software.fitness.domain.Member;
 import com.software.fitness.domain.Staff;
 
@@ -22,4 +23,6 @@ public interface StaffService {
     boolean addMember(Member member);
 
     Member getMemberByID(int id);
+
+    boolean updateCoach(Coach coach);
 }

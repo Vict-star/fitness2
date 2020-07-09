@@ -1,6 +1,7 @@
 package com.software.fitness.controller;
 
 import com.software.fitness.domain.*;
+import com.software.fitness.service.RecordService;
 import com.software.fitness.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ public class StaffController {
 
     @Autowired
     private StaffService staffService;
+    private RecordService recordService;
 
     /*TODO:会员列表页*/
     @GetMapping("/memberManage")
@@ -43,6 +45,8 @@ public class StaffController {
         String message = "";
         if (result) {
             message = "" + id + " 已注销";
+            int s_id = ((Staff) request.getSession().getAttribute("loginUser")).getId();
+            recordService.insertRecord(genRecord(s_id, "注销会员：" + member.toString()));
         } else {
             message = "更改失败，请稍后重试";
         }
@@ -62,6 +66,7 @@ public class StaffController {
         if (result) {
             message = "" + id + "已激活";
             int sid = ((Staff) request.getSession().getAttribute("loginUser")).getId();
+            recordService.staffInsertRecord(genRecord(sid, "激活会员：" + member.toString()));
         } else {
             message = "更改失败，请稍后重试";
         }
@@ -76,6 +81,8 @@ public class StaffController {
         String message = "";
         if (result) {
             message = "添加成功";
+            int s_id = ((Staff) request.getSession().getAttribute("loginUser")).getId();
+            recordService.insertRecord(genRecord(s_id, "添加会员：" + member.toString()));
         } else {
             message = "添加失败";
         }
@@ -84,6 +91,13 @@ public class StaffController {
     }
 
     /*TODO:会员编辑*/
+
+    private Record genRecord(int id, String op) {
+        Record record = new Record();
+        record.setStaff_id(id);
+        record.setOperation(op);
+        return record;
+    }
 
     @PostMapping("/memberManage/edit")
     public String editMember(Member member, HttpServletRequest request, RedirectAttributes attributes, Model model) {
@@ -96,10 +110,10 @@ public class StaffController {
     public String updateMember(@PathVariable("id") int id, Member member, HttpServletRequest request, RedirectAttributes attributes, Model model) {
         String message = "";
         boolean change = staffService.updateMemberall(member);
-        if (change == true){
+        if (change == true) {
             message = "修改成功";
-//            int s_id =((Staff)request.getSession().getAttribute("")).getId();
-//            recordService.insertRecord(genRecord(s_id, "修改会员：" + member.toString()));
+            int s_id =((Staff)request.getSession().getAttribute("")).getId();
+            recordService.insertRecord(genRecord(s_id, "修改会员：" + member.toString()));
             model.addAttribute("member", staffService.getMemberByID(id));
         } else {
             message = "修改失败";
@@ -142,6 +156,64 @@ public class StaffController {
     /*TODO:启用教练*/
     @PostMapping("/coachManage/{id}/employ")
     public String employCoach(@PathVariable("id") int id, HttpServletRequest request, RedirectAttributes attributes) {
+        return "redirect:/staff/coachManage";
+    }
+
+
+    /*TODO:教练编辑上传*/
+    @PostMapping("/coachManage/{id}/update")
+    public String updateCoach(@PathVariable("id") int id, Coach coach, HttpServletRequest request, RedirectAttributes attributes) {
+        coach.setId(id);
+        boolean result = staffService.updateCoach(coach);
+        String message = "";
+        if (result) {
+            message = "更新成功";
+            int sid = ((Staff) request.getSession().getAttribute("loginUser")).getId();
+            recordService.staffInsertRecord(genRecord(sid, "更新教练：" + coach.toString()));
+        } else {
+            message = "更改失败，请稍后重试";
+        }
+        attributes.addFlashAttribute("message", message);
+        return "redirect:/staff/coachManage/" + id;
+    }
+
+
+    /*TODO:离职教练*/
+    @PostMapping("/coachManage/{id}/dismiss")
+    public String dismissCoach(@PathVariable("id") int id, HttpServletRequest request, RedirectAttributes attributes) {
+        Coach coach = new Coach();
+        coach.setId(id);
+        coach.setState("离职");
+        boolean result = staffService.updateCoach(coach);
+        String message = "";
+        if (result) {
+            message = "" + coach.getId() + " 已离职";
+            int sid = ((Staff) request.getSession().getAttribute("loginUser")).getId();
+            recordService.staffInsertRecord(genRecord(sid, "离职教练：" + coach.toString()));
+        } else {
+            message = "更改失败，请稍后重试";
+        }
+        attributes.addFlashAttribute("message", message);
+        return "redirect:/staff/coachManage";
+    }
+
+
+    /*TODO:启用教练*/
+    @PostMapping("/coachManage/{id}/employ")
+    public String employCoach(@PathVariable("id") int id, HttpServletRequest request, RedirectAttributes attributes) {
+        Coach coach = new Coach();
+        coach.setId(id);
+        coach.setState("在职");
+        boolean result = staffService.updateCoach(coach);
+        String message = "";
+        if (result) {
+            message = "" + id + " 已启用";
+            int sid = ((Staff) request.getSession().getAttribute("loginUser")).getId();
+            recordService.staffInsertRecord(genRecord(sid, "启用教练：" + coach.toString()));
+        } else {
+            message = "更改失败，请稍后重试";
+        }
+        attributes.addFlashAttribute("message", message);
         return "redirect:/staff/coachManage";
     }
 }

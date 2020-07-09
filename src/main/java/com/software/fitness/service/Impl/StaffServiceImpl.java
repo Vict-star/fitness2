@@ -17,16 +17,19 @@ public class StaffServiceImpl implements StaffService {
     private StaffDao staffDao;
     @Autowired
     private MemberDao memberDao;
+    @Autowired
+    private CoachDao coachDao;
 
     @Override
     public boolean updateMember(Member member) {
-       Integer row = memberDao.update(member);
-        return row>0;
+        Integer row = memberDao.update(member);
+        return row > 0;
     }
 
-    public boolean updateMemberall(Member member){
+    @Override
+    public boolean updateMemberall(Member member) {
         Integer row = memberDao.updateall(member);
-        return row>0;
+        return row > 0;
     }
 
 
@@ -49,5 +52,11 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public Member getMemberByID(int id) {
         return memberDao.getMemberById(id);
+    }
+
+    @Override
+    public boolean updateCoach(Coach coach) {
+        Integer row = coachDao.update(coach);
+        return row > 0;
     }
 }
