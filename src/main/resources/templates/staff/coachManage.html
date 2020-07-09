@@ -100,7 +100,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="coach :${coachPage.list}">
+                   <tr th:each="coach :${coachList}">
                         <td th:text="${#numbers.formatInteger(coach.id,10)}"></td>
                         <td th:text="${coach.name}"></td>
                         <td th:text="${coach.gender}"></td>

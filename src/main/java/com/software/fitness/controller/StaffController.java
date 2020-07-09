@@ -107,20 +107,30 @@ public class StaffController {
 
     /*TODO:教练列表页*/
     @GetMapping("/coachManage")
-    public String coachManagePage(HttpServletRequest request,
-                                  Model model) {
+    public String coachManagePage(HttpServletRequest request, Model model) {
+        List<Coach> coachList = staffService.listCoach();
+        model.addAttribute("coachList", coachList);
         return "staff/coachManage";
     }
 
     /*TODO:添加教练*/
     @PostMapping("/coachManage/add")
     public String addCoach(Coach coach, HttpServletRequest request, RedirectAttributes attributes) {
+        boolean result = staffService.addCoach(coach);
+        String message = "";
+        if (result) {
+            message = "添加成功";
+        } else {
+            message = "添加失败";
+        }
+        attributes.addAttribute("message", message);
         return "redirect:/staff/coachManage";
     }
 
     /*TODO:教练详情页*/
     @GetMapping("/coachManage/{id}")
     public String coachEditPage(@PathVariable("id") int id, HttpServletRequest request, Model model) {
+        model.addAttribute("coach", staffService.getCoachByID(id));
         return "staff/coachEdit";
     }
 

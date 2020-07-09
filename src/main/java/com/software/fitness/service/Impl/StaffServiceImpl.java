@@ -59,4 +59,18 @@ public class StaffServiceImpl implements StaffService {
         Integer row = coachDao.update(coach);
         return row > 0;
     }
+
+    @Override
+    public List<Coach> listCoach() { return coachDao.listCoach(); }
+
+    @Override
+    public boolean addCoach(Coach coach) {
+        Integer row = coachDao.insert(coach);
+        return row > 0;
+    }
+
+    @Override
+    public Coach getCoachByID(int id) {
+        return coachDao.getCoachById(id);
+    }
 }

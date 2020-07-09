@@ -18,4 +18,16 @@
         where id = #{id};
     </update>
 
+    <select id="listCoach" resultType="com.software.fitness.domain.Coach">
+        select * from coach;
+    </select>
+
+    <insert id="insert" parameterType="com.software.fitness.domain.Coach">
+        insert into coach(`name`) values (#{name});
+    </insert>
+
+    <select id="getCoachById" parameterType="java.lang.Integer" resultType="com.software.fitness.domain.Coach">
+        select * from coach where id = #{id}
+    </select>
+
 </mapper>

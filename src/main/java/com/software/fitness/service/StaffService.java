@@ -24,5 +24,12 @@ public interface StaffService {
 
     Member getMemberByID(int id);
 
+
     boolean updateCoach(Coach coach);
+
+    List<Coach> listCoach();
+
+    boolean addCoach(Coach coach);
+
+    Coach getCoachByID(int id);
 }
