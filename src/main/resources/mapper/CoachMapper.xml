@@ -22,8 +22,9 @@
         select * from coach;
     </select>
 
-    <insert id="insert" parameterType="com.software.fitness.domain.Coach">
-        insert into coach(`name`) values (#{name});
+    <insert id="insert" parameterType="com.software.fitness.domain.Coach" useGeneratedKeys="true" keyProperty="id">
+        insert into coach(`name`,`gender`,`date_of_birth`,`phone_number`,`address`,`introduction`)
+         VALUES (#{name},#{gender},#{date_of_birth},#{phone_number},#{address},#{introduction});
     </insert>
 
     <select id="getCoachById" parameterType="java.lang.Integer" resultType="com.software.fitness.domain.Coach">

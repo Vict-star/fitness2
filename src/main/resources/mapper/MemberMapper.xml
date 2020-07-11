@@ -24,8 +24,9 @@
         WHERE id = #{id};
     </update>
 
-    <insert id="insert" parameterType="com.software.fitness.domain.Member">
-        insert into member(`name`) values (#{name});
+    <insert id="insert" parameterType="com.software.fitness.domain.Member" useGeneratedKeys="true" keyProperty="id">
+        insert into member(`name`,`gender`,`date_of_birth`,`validity`,`phone_number`)
+        VALUES (#{name},#{gender},#{date_of_birth},#{validity},#{phone_number});
     </insert>
 
     <select id="getMemberById" parameterType="java.lang.Integer" resultType="com.software.fitness.domain.Member">
